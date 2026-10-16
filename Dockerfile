@@ -16,6 +16,10 @@ RUN pip install --upgrade pip \
     && pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision \
     && pip install -r requirements.txt
 
+# Fail during build (not at container startup) if the pinned MediaPipe package
+# no longer exposes the legacy Hands API used by this MVP.
+RUN python -c "import mediapipe as mp; assert mp.__version__ == '0.10.21'; assert hasattr(mp, 'solutions'); _ = mp.solutions.hands.Hands; print('MediaPipe', mp.__version__, 'legacy Hands API OK')"
+
 RUN python -c "from ultralytics import YOLO; YOLO('yolo11n.pt')"
 
 COPY app ./app
