@@ -1,6 +1,8 @@
-# GO2 Vision MVP
+# Robot Vision MVP
 
-MVP de visão computacional para validar **HUD**, **controle por gestos** e **caça a objetos** usando apenas uma webcam antes da integração com o Unitree Go2.
+MVP **white-label** de visão computacional para validar **HUD**, **controle por gestos** e **caça a objetos** usando apenas uma webcam antes da integração com um robô real, como o Unitree Go2.
+
+O frontend não possui identidade visual de empresa. O nome exibido é apenas **Robot Vision** e pode ser substituído posteriormente sem alterar a arquitetura.
 
 ## O que já está no MVP
 
@@ -65,13 +67,21 @@ MockRobotController
 
 A webcam é capturada pelo **navegador**, não pelo container. Isso permite executar o mesmo `docker compose` no Docker Desktop do Windows/macOS e no Linux sem mapear `/dev/video0`.
 
+## Hardware / GPU
+
+**Placa de vídeo não é necessária para este MVP.** A inferência do YOLO está explicitamente configurada para `device="cpu"` e a imagem Docker instala a versão **CPU-only** do PyTorch.
+
+Isso evita baixar os pacotes CUDA/NVIDIA que a instalação padrão do PyTorch para Linux pode puxar mesmo quando não existe GPU disponível.
+
+Para priorizar desempenho em CPU, o tamanho de inferência padrão do YOLO é `416`. Ele pode ser alterado pela variável `YOLO_IMGSZ`.
+
 ## Rodar
 
 Requisitos:
 
 - Docker + Docker Compose;
 - navegador moderno com webcam;
-- internet durante a **primeira build**, pois o peso `yolo11n.pt` é baixado e gravado na imagem.
+- internet durante a **primeira build**, pois o PyTorch CPU e o peso `yolo11n.pt` são baixados e gravados na imagem.
 
 ```bash
 docker compose up --build
@@ -110,8 +120,11 @@ No `docker-compose.yml`:
 
 ```yaml
 YOLO_CONFIDENCE: "0.35"
+YOLO_IMGSZ: "416"
 OBJECT_STOP_AREA: "0.18"
 ```
+
+`YOLO_IMGSZ` controla o tamanho usado na inferência. Valores menores tendem a aumentar FPS em CPU, com alguma perda de precisão.
 
 `OBJECT_STOP_AREA` controla quando o alvo é considerado próximo o suficiente para gerar `STOP`.
 
