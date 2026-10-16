@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GO2 Vision MVP</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">COMPUTER VISION PROTOTYPE</div>
+        <h1>GO2 <span>VISION</span></h1>
+      </div>
+      <div class="badge warning">TEST MODE · NO ROBOT CONNECTED</div>
+    </header>
+
+    <section class="grid">
+      <div class="viewer-card">
+        <div class="viewer">
+          <video id="camera" autoplay playsinline muted></video>
+          <canvas id="hud"></canvas>
+          <div id="cameraPlaceholder" class="camera-placeholder">
+            <div class="reticle">+</div>
+            <strong>CÂMERA DESLIGADA</strong>
+            <span>Inicie a webcam para validar o HUD e a visão.</span>
+          </div>
+        </div>
+
+        <div class="viewer-footer">
+          <span id="connectionDot" class="dot"></span>
+          <span id="connectionLabel">backend offline</span>
+          <span class="separator"></span>
+          <span id="frameRate">0 FPS</span>
+          <span class="separator"></span>
+          <span id="latency">-- ms</span>
+        </div>
+      </div>
+
+      <aside class="panel">
+        <section class="panel-section">
+          <div class="section-title">Modo</div>
+          <div class="segmented">
+            <button id="objectMode" class="active" data-mode="object_hunt">1 · Object Hunt</button>
+            <button id="gestureMode" data-mode="gesture">2 · Gestures</button>
+          </div>
+        </section>
+
+        <section id="targetSection" class="panel-section">
+          <label class="section-title" for="target">Alvo</label>
+          <select id="target">
+            <option value="bottle">bottle</option>
+          </select>
+        </section>
+
+        <section class="panel-section telemetry">
+          <div>
+            <span>Status</span>
+            <strong id="status">Aguardando câmera</strong>
+          </div>
+          <div>
+            <span>Detecção</span>
+            <strong id="detection">--</strong>
+          </div>
+          <div>
+            <span>Confiança</span>
+            <strong id="confidence">--</strong>
+          </div>
+        </section>
+
+        <section class="command-card">
+          <span>ROBOT COMMAND</span>
+          <strong id="action">IDLE</strong>
+          <small id="proposedAction">proposto: IDLE</small>
+        </section>
+
+        <section class="panel-section guide">
+          <div class="section-title">Gestos do MVP</div>
+          <div><kbd>✋</kbd><span>mão aberta</span><strong>STOP</strong></div>
+          <div><kbd>👍</kbd><span>joinha</span><strong>DANCE</strong></div>
+          <div><kbd>☝</kbd><span>apontar cima</span><strong>FORWARD</strong></div>
+          <div><kbd>← / →</kbd><span>apontar lado</span><strong>TURN</strong></div>
+        </section>
+
+        <div class="actions">
+          <button id="startCamera" class="primary">Iniciar webcam</button>
+          <button id="stopCamera">Parar</button>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      Teclas <kbd>1</kbd> Object Hunt · <kbd>2</kbd> Gestures · processamento no backend Docker
+    </footer>
+  </main>
+
+  <canvas id="capture" hidden></canvas>
+  <script src="/static/app.js"></script>
+</body>
+</html>
