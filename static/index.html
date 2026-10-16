@@ -3,64 +3,88 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Robot Vision MVP</title>
+  <title>Robot Vision</title>
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <main class="shell">
-    <header class="topbar">
+  <main class="layout-principal">
+    <header class="cabecalho">
       <div>
-        <div class="eyebrow">COMPUTER VISION PROTOTYPE</div>
-        <h1>ROBOT <span>VISION</span></h1>
+        <p class="sobretitulo">Protótipo de visão computacional</p>
+        <h1>Robot Vision</h1>
+        <p class="descricao-cabecalho">Interface de validação com câmera, reconhecimento de objetos e leitura de gestos.</p>
       </div>
-      <div class="badge warning">TEST MODE · NO ROBOT CONNECTED</div>
+      <div class="selo-status">Modo de teste · sem robô conectado</div>
     </header>
 
-    <section class="grid">
-      <div class="viewer-card">
-        <div class="viewer">
+    <section class="conteudo">
+      <div class="painel-video card">
+        <div class="area-video">
           <video id="camera" autoplay playsinline muted></video>
           <canvas id="hud"></canvas>
-          <div id="cameraPlaceholder" class="camera-placeholder">
-            <div class="reticle">+</div>
-            <strong>CÂMERA DESLIGADA</strong>
-            <span>Inicie a webcam para validar o HUD e a visão.</span>
+          <div id="cameraPlaceholder" class="placeholder-camera">
+            <div class="placeholder-icone">CAM</div>
+            <strong>Câmera desligada</strong>
+            <span>Inicie a câmera para validar a visão e as decisões do robô.</span>
           </div>
         </div>
 
-        <div class="viewer-footer">
-          <span id="connectionDot" class="dot"></span>
-          <span id="connectionLabel">backend offline</span>
-          <span class="separator"></span>
-          <span id="frameRate">0 FPS</span>
-          <span class="separator"></span>
+        <div class="barra-status-video">
+          <span class="status-linha"><span id="connectionDot" class="dot"></span><span id="connectionLabel">Backend offline</span></span>
+          <span class="separador"></span>
+          <span id="frameRate">0 quadros/s</span>
+          <span class="separador"></span>
           <span id="latency">-- ms</span>
         </div>
       </div>
 
-      <aside class="panel">
-        <section class="panel-section">
-          <div class="section-title">Modo</div>
-          <div class="segmented">
-            <button id="objectMode" class="active" data-mode="object_hunt">1 · Object Hunt</button>
-            <button id="gestureMode" data-mode="gesture">2 · Gestures</button>
+      <aside class="painel-lateral">
+        <section class="card secao">
+          <div class="titulo-secao">Modo de operação</div>
+          <div class="grupo-botoes">
+            <button id="objectMode" class="ativo" data-mode="object_hunt">Caça a objeto</button>
+            <button id="gestureMode" data-mode="gesture">Gestos</button>
           </div>
         </section>
 
-        <section id="targetSection" class="panel-section">
-          <label class="section-title" for="target">Alvo</label>
-          <select id="target">
-            <option value="bottle">bottle</option>
-          </select>
+        <section id="targetSection" class="card secao">
+          <label class="titulo-secao" for="target">Objeto alvo</label>
+          <select id="target"></select>
         </section>
 
-        <section class="panel-section telemetry">
+        <section class="card resumo-comando">
+          <span>Comando do robô</span>
+          <strong id="action">Aguardando</strong>
+          <small id="proposedAction">Proposto: Aguardando</small>
+        </section>
+
+        <section id="movementCard" class="card secao movimento-card" data-action="idle">
+          <div class="topo-movimento">
+            <div>
+              <div class="titulo-secao">Indicador de movimento</div>
+              <strong id="directionLabel">Aguardando</strong>
+            </div>
+            <div id="directionArrow" class="seta-movimento">•</div>
+          </div>
+          <div class="pista-movimento">
+            <div class="faixas-pista"></div>
+            <div id="robotSprite" class="robozinho" aria-hidden="true">
+              <span class="cabeca-robo"></span>
+              <span class="corpo-robo"></span>
+              <span class="perna-robo esquerda"></span>
+              <span class="perna-robo direita"></span>
+            </div>
+          </div>
+          <p id="directionText" class="texto-movimento">Sem comando no momento.</p>
+        </section>
+
+        <section class="card secao telemetria">
           <div>
             <span>Status</span>
             <strong id="status">Aguardando câmera</strong>
           </div>
           <div>
-            <span>Detecção</span>
+            <span>Leitura atual</span>
             <strong id="detection">--</strong>
           </div>
           <div>
@@ -69,29 +93,23 @@
           </div>
         </section>
 
-        <section class="command-card">
-          <span>ROBOT COMMAND</span>
-          <strong id="action">IDLE</strong>
-          <small id="proposedAction">proposto: IDLE</small>
+        <section class="card secao ajuda-gestos">
+          <div class="titulo-secao">Gestos do protótipo</div>
+          <div><kbd>✋</kbd><span>Mão aberta</span><strong>Parar</strong></div>
+          <div><kbd>👍</kbd><span>Joinha</span><strong>Dançar</strong></div>
+          <div><kbd>☝</kbd><span>Apontar para cima</span><strong>Avançar</strong></div>
+          <div><kbd>← / →</kbd><span>Apontar para o lado</span><strong>Virar</strong></div>
         </section>
 
-        <section class="panel-section guide">
-          <div class="section-title">Gestos do MVP</div>
-          <div><kbd>✋</kbd><span>mão aberta</span><strong>STOP</strong></div>
-          <div><kbd>👍</kbd><span>joinha</span><strong>DANCE</strong></div>
-          <div><kbd>☝</kbd><span>apontar cima</span><strong>FORWARD</strong></div>
-          <div><kbd>← / →</kbd><span>apontar lado</span><strong>TURN</strong></div>
-        </section>
-
-        <div class="actions">
-          <button id="startCamera" class="primary">Iniciar webcam</button>
+        <section class="acoes">
+          <button id="startCamera" class="primario">Iniciar câmera</button>
           <button id="stopCamera">Parar</button>
-        </div>
+        </section>
       </aside>
     </section>
 
-    <footer>
-      Teclas <kbd>1</kbd> Object Hunt · <kbd>2</kbd> Gestures · processamento no backend Docker
+    <footer class="rodape">
+      Atalhos: <kbd>1</kbd> caça a objeto · <kbd>2</kbd> gestos · processamento no backend Docker
     </footer>
   </main>
 
