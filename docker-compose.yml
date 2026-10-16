@@ -8,6 +8,7 @@ services:
     environment:
       YOLO_MODEL: /app/yolo11n.pt
       YOLO_CONFIDENCE: "0.35"
+      YOLO_IMGSZ: "416"
       OBJECT_STOP_AREA: "0.18"
     restart: unless-stopped
     healthcheck:
