@@ -1,8 +1,8 @@
 services:
-  go2-vision:
+  robot-vision:
     build:
       context: .
-    container_name: go2-vision-mvp
+    container_name: robot-vision-mvp
     ports:
       - "8000:8000"
     environment:
