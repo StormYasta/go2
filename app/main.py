@@ -22,7 +22,7 @@ logging.basicConfig(
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "static"
 
-app = FastAPI(title="GO2 Vision MVP", version="0.1.0")
+app = FastAPI(title="Robot Vision", version="0.1.0")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 vision = VisionEngine()
