@@ -23,9 +23,9 @@
           <video id="camera" autoplay playsinline muted></video>
           <canvas id="hud"></canvas>
           <div id="cameraPlaceholder" class="placeholder-camera">
-            <div class="placeholder-icone">CAM</div>
+            <div class="placeholder-icone">📷</div>
             <strong>Câmera desligada</strong>
-            <span>Inicie a câmera para validar a visão e as decisões do robô.</span>
+            <span>Inicie a câmera para validar o HUD e as decisões do robô.</span>
           </div>
         </div>
 
@@ -39,7 +39,7 @@
       </div>
 
       <aside class="painel-lateral">
-        <section class="card secao">
+        <section class="card secao card-modo">
           <div class="titulo-secao">Modo de operação</div>
           <div class="grupo-botoes">
             <button id="objectMode" class="ativo" data-mode="object_hunt">Caça a objeto</button>
@@ -47,18 +47,18 @@
           </div>
         </section>
 
-        <section id="targetSection" class="card secao">
+        <section id="targetSection" class="card secao card-alvo">
           <label class="titulo-secao" for="target">Objeto alvo</label>
           <select id="target"></select>
         </section>
 
-        <section class="card resumo-comando">
+        <section class="card resumo-comando card-comando">
           <span>Comando do robô</span>
           <strong id="action">Aguardando</strong>
           <small id="proposedAction">Proposto: Aguardando</small>
         </section>
 
-        <section id="movementCard" class="card secao movimento-card" data-action="idle">
+        <section id="movementCard" class="card secao movimento-card card-movimento" data-action="idle">
           <div class="topo-movimento">
             <div>
               <div class="titulo-secao">Indicador de movimento</div>
@@ -68,17 +68,12 @@
           </div>
           <div class="pista-movimento">
             <div class="faixas-pista"></div>
-            <div id="robotSprite" class="robozinho" aria-hidden="true">
-              <span class="cabeca-robo"></span>
-              <span class="corpo-robo"></span>
-              <span class="perna-robo esquerda"></span>
-              <span class="perna-robo direita"></span>
-            </div>
+            <div id="robotSprite" class="robozinho">🤖</div>
           </div>
           <p id="directionText" class="texto-movimento">Sem comando no momento.</p>
         </section>
 
-        <section class="card secao telemetria">
+        <section class="card secao telemetria card-telemetria">
           <div>
             <span>Status</span>
             <strong id="status">Aguardando câmera</strong>
@@ -93,15 +88,17 @@
           </div>
         </section>
 
-        <section class="card secao ajuda-gestos">
+        <section class="card secao ajuda-gestos card-gestos">
           <div class="titulo-secao">Gestos do protótipo</div>
-          <div><kbd>✋</kbd><span>Mão aberta</span><strong>Parar</strong></div>
-          <div><kbd>👍</kbd><span>Joinha</span><strong>Dançar</strong></div>
-          <div><kbd>☝</kbd><span>Apontar para cima</span><strong>Avançar</strong></div>
-          <div><kbd>← / →</kbd><span>Apontar para o lado</span><strong>Virar</strong></div>
+          <div class="chips-gestos">
+            <div class="chip-gesto"><kbd>✋</kbd><div><span>Mão aberta</span><strong>Parar</strong></div></div>
+            <div class="chip-gesto"><kbd>👍</kbd><div><span>Joinha</span><strong>Dançar</strong></div></div>
+            <div class="chip-gesto"><kbd>☝</kbd><div><span>Apontar para cima</span><strong>Avançar</strong></div></div>
+            <div class="chip-gesto"><kbd>← / →</kbd><div><span>Apontar para o lado</span><strong>Virar</strong></div></div>
+          </div>
         </section>
 
-        <section class="acoes">
+        <section class="acoes card-acoes">
           <button id="startCamera" class="primario">Iniciar câmera</button>
           <button id="stopCamera">Parar</button>
         </section>
