@@ -1,0 +1,429 @@
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --line: #d7dfeb;
+  --line-strong: #c2cedd;
+  --text: #1f2937;
+  --muted: #667085;
+  --accent: #2563eb;
+  --accent-soft: #e8f0ff;
+  --danger: #b42318;
+  --shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg, #f8faff 0%, var(--bg) 100%);
+  color: var(--text);
+}
+button, select { font: inherit; }
+
+.layout-principal {
+  width: min(1810px, calc(100vw - 16px));
+  margin: 0 auto;
+  padding: 12px 8px 8px;
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.sobretitulo {
+  margin: 0 0 2px;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.cabecalho h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 2.1vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.descricao-cabecalho {
+  margin: 6px 0 0;
+  max-width: 840px;
+  font-size: 0.93rem;
+  color: var(--muted);
+}
+
+.selo-status {
+  white-space: nowrap;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  box-shadow: var(--shadow);
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: minmax(780px, 1.72fr) minmax(560px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.painel-video { overflow: hidden; }
+.area-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #e5eaf3;
+}
+
+#camera, #hud {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+#camera {
+  object-fit: cover;
+  background: #d9e2ef;
+}
+#hud { pointer-events: none; }
+
+.placeholder-camera {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  color: #526174;
+  background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(247,249,253,.95));
+}
+.placeholder-camera.hidden { display: none; }
+.placeholder-icone { font-size: 1.8rem; }
+
+.barra-status-video {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+.status-linha {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #9aa5b1;
+  display: inline-block;
+}
+.dot.online { background: #16a34a; }
+.dot.warning { background: #d97706; }
+.dot.offline { background: #9aa5b1; }
+.separador {
+  width: 1px;
+  height: 14px;
+  background: var(--line);
+}
+
+.painel-lateral {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "modo modo"
+    "alvo comando"
+    "movimento movimento"
+    "telemetria telemetria"
+    "gestos gestos"
+    "acoes acoes";
+  gap: 10px;
+}
+.card-modo { grid-area: modo; }
+.card-alvo { grid-area: alvo; }
+.card-comando { grid-area: comando; }
+.card-movimento { grid-area: movimento; }
+.card-telemetria { grid-area: telemetria; }
+.card-gestos { grid-area: gestos; }
+.card-acoes { grid-area: acoes; }
+
+.secao { padding: 12px; }
+.titulo-secao {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #344054;
+}
+
+.grupo-botoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+button, select {
+  border: 1px solid var(--line-strong);
+  border-radius: 11px;
+  background: #fff;
+  color: var(--text);
+  padding: 10px 12px;
+}
+button {
+  cursor: pointer;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+button:hover, select:hover { border-color: #9db5f6; }
+button.ativo,
+button.primario {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, .18);
+}
+button:active { transform: translateY(1px); }
+select { width: 100%; }
+
+.resumo-comando {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 100%;
+  justify-content: center;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+.resumo-comando span,
+.telemetria span,
+.texto-movimento,
+.rodape,
+.ajuda-gestos span { color: var(--muted); }
+.resumo-comando strong { font-size: 1.3rem; }
+.resumo-comando small { font-size: .82rem; }
+
+.movimento-card { padding: 12px; }
+.topo-movimento {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+.topo-movimento strong {
+  display: block;
+  font-size: 1rem;
+}
+.seta-movimento {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 1.55rem;
+  font-weight: 700;
+}
+.pista-movimento {
+  position: relative;
+  height: 58px;
+  border-radius: 13px;
+  border: 1px dashed var(--line-strong);
+  background: #f8fafc;
+  overflow: hidden;
+  margin-bottom: 7px;
+}
+.faixas-pista {
+  position: absolute;
+  inset: 50% 12px auto 12px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #c6d0e0 0 14px, transparent 14px 25px);
+}
+.robozinho {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.65rem;
+}
+.texto-movimento {
+  margin: 0;
+  font-size: .86rem;
+}
+
+.telemetria {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr .7fr;
+  gap: 8px;
+}
+.telemetria div {
+  min-width: 0;
+  padding: 9px 10px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e6ecf5;
+}
+.telemetria span {
+  display: block;
+  font-size: .79rem;
+}
+.telemetria strong {
+  display: block;
+  margin-top: 4px;
+  font-size: .92rem;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+
+.chips-gestos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+.chip-gesto {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  padding: 8px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e6ecf5;
+}
+.chip-gesto div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chip-gesto span {
+  font-size: .77rem;
+  line-height: 1.1;
+}
+.chip-gesto strong {
+  font-size: .82rem;
+  line-height: 1.1;
+  color: #344054;
+}
+
+kbd {
+  font-family: inherit;
+  background: #eef2f7;
+  border: 1px solid #d7dfeb;
+  border-radius: 9px;
+  padding: 5px 7px;
+  min-width: 38px;
+  text-align: center;
+  color: #344054;
+}
+
+.acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.rodape {
+  display: none;
+  margin-top: 10px;
+  text-align: center;
+  font-size: .86rem;
+}
+
+.movimento-card[data-action="forward"] .seta-movimento { animation: pulso-direcao 1.1s infinite; }
+.movimento-card[data-action="forward"] .robozinho { animation: robo-avancar 1.2s infinite ease-in-out; }
+.movimento-card[data-action="turn-left"] .robozinho { animation: robo-esquerda 1s infinite ease-in-out; }
+.movimento-card[data-action="turn-right"] .robozinho { animation: robo-direita 1s infinite ease-in-out; }
+.movimento-card[data-action="search"] .seta-movimento { animation: girar 1.4s linear infinite; }
+.movimento-card[data-action="search"] .robozinho { animation: oscilar 1.2s infinite ease-in-out; }
+.movimento-card[data-action="dance"] .robozinho { animation: dancar .75s infinite ease-in-out; }
+.movimento-card[data-action="stop"] .seta-movimento {
+  background: #fff1f2;
+  color: var(--danger);
+}
+
+@keyframes pulso-direcao {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes robo-avancar {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, -64%); }
+}
+@keyframes robo-esquerda {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-88%, -50%); }
+}
+@keyframes robo-direita {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-12%, -50%); }
+}
+@keyframes oscilar {
+  0%, 100% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-62%, -50%); }
+  75% { transform: translate(-38%, -50%); }
+}
+@keyframes dancar {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(-58%, -50%) rotate(-10deg); }
+  75% { transform: translate(-42%, -50%) rotate(10deg); }
+}
+
+@media (max-width: 1500px) {
+  .conteudo {
+    grid-template-columns: minmax(0, 1.4fr) minmax(500px, .95fr);
+  }
+  .chips-gestos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1180px) {
+  .conteudo { grid-template-columns: 1fr; }
+  .painel-lateral { grid-template-columns: 1fr 1fr; }
+  .rodape { display: block; }
+}
+
+@media (max-width: 760px) {
+  .layout-principal {
+    width: calc(100vw - 8px);
+    padding: 10px 4px 8px;
+  }
+  .cabecalho { flex-direction: column; }
+  .painel-lateral,
+  .grupo-botoes,
+  .acoes,
+  .chips-gestos,
+  .telemetria { grid-template-columns: 1fr; }
+  .painel-lateral {
+    grid-template-areas:
+      "modo"
+      "alvo"
+      "comando"
+      "movimento"
+      "telemetria"
+      "gestos"
+      "acoes";
+  }
+}

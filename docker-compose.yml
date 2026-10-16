@@ -1,0 +1,22 @@
+services:
+  robot-vision:
+    build:
+      context: .
+    container_name: robot-vision-mvp
+    ports:
+      - "8000:8000"
+    environment:
+      YOLO_MODEL: /app/yolo11n.pt
+      YOLO_CONFIDENCE: "0.35"
+      YOLO_IMGSZ: "416"
+      OBJECT_STOP_AREA: "0.18"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"
+      interval: 15s
+      timeout: 4s
+      retries: 5

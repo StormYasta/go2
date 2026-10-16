@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robot Vision</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="layout-principal">
+    <header class="cabecalho">
+      <div>
+        <p class="sobretitulo">Protótipo de visão computacional</p>
+        <h1>Robot Vision</h1>
+        <p class="descricao-cabecalho">Interface de validação com câmera, reconhecimento de objetos e leitura de gestos.</p>
+      </div>
+      <div class="selo-status">Modo de teste · sem robô conectado</div>
+    </header>
+
+    <section class="conteudo">
+      <div class="painel-video card">
+        <div class="area-video">
+          <video id="camera" autoplay playsinline muted></video>
+          <canvas id="hud"></canvas>
+          <div id="cameraPlaceholder" class="placeholder-camera">
+            <div class="placeholder-icone">📷</div>
+            <strong>Câmera desligada</strong>
+            <span>Inicie a câmera para validar o HUD e as decisões do robô.</span>
+          </div>
+        </div>
+
+        <div class="barra-status-video">
+          <span class="status-linha"><span id="connectionDot" class="dot"></span><span id="connectionLabel">Backend offline</span></span>
+          <span class="separador"></span>
+          <span id="frameRate">0 quadros/s</span>
+          <span class="separador"></span>
+          <span id="latency">-- ms</span>
+        </div>
+      </div>
+
+      <aside class="painel-lateral">
+        <section class="card secao card-modo">
+          <div class="titulo-secao">Modo de operação</div>
+          <div class="grupo-botoes">
+            <button id="objectMode" class="ativo" data-mode="object_hunt">Caça a objeto</button>
+            <button id="gestureMode" data-mode="gesture">Gestos</button>
+          </div>
+        </section>
+
+        <section id="targetSection" class="card secao card-alvo">
+          <label class="titulo-secao" for="target">Objeto alvo</label>
+          <select id="target"></select>
+        </section>
+
+        <section class="card resumo-comando card-comando">
+          <span>Comando do robô</span>
+          <strong id="action">Aguardando</strong>
+          <small id="proposedAction">Proposto: Aguardando</small>
+        </section>
+
+        <section id="movementCard" class="card secao movimento-card card-movimento" data-action="idle">
+          <div class="topo-movimento">
+            <div>
+              <div class="titulo-secao">Indicador de movimento</div>
+              <strong id="directionLabel">Aguardando</strong>
+            </div>
+            <div id="directionArrow" class="seta-movimento">•</div>
+          </div>
+          <div class="pista-movimento">
+            <div class="faixas-pista"></div>
+            <div id="robotSprite" class="robozinho">🤖</div>
+          </div>
+          <p id="directionText" class="texto-movimento">Sem comando no momento.</p>
+        </section>
+
+        <section class="card secao telemetria card-telemetria">
+          <div>
+            <span>Status</span>
+            <strong id="status">Aguardando câmera</strong>
+          </div>
+          <div>
+            <span>Leitura atual</span>
+            <strong id="detection">--</strong>
+          </div>
+          <div>
+            <span>Confiança</span>
+            <strong id="confidence">--</strong>
+          </div>
+        </section>
+
+        <section class="card secao ajuda-gestos card-gestos">
+          <div class="titulo-secao">Gestos do protótipo</div>
+          <div class="chips-gestos">
+            <div class="chip-gesto"><kbd>✋</kbd><div><span>Mão aberta</span><strong>Parar</strong></div></div>
+            <div class="chip-gesto"><kbd>👍</kbd><div><span>Joinha</span><strong>Dançar</strong></div></div>
+            <div class="chip-gesto"><kbd>☝</kbd><div><span>Apontar para cima</span><strong>Avançar</strong></div></div>
+            <div class="chip-gesto"><kbd>← / →</kbd><div><span>Apontar para o lado</span><strong>Virar</strong></div></div>
+          </div>
+        </section>
+
+        <section class="acoes card-acoes">
+          <button id="startCamera" class="primario">Iniciar câmera</button>
+          <button id="stopCamera">Parar</button>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="rodape">
+      Atalhos: <kbd>1</kbd> caça a objeto · <kbd>2</kbd> gestos · processamento no backend Docker
+    </footer>
+  </main>
+
+  <canvas id="capture" hidden></canvas>
+  <script src="/static/app.js"></script>
+</body>
+</html>
