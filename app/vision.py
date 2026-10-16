@@ -24,6 +24,7 @@ class VisionEngine:
         self.names = self.detector.names
         self.confidence = float(os.getenv("YOLO_CONFIDENCE", "0.35"))
         self.stop_area = float(os.getenv("OBJECT_STOP_AREA", "0.18"))
+        self.image_size = int(os.getenv("YOLO_IMGSZ", "416"))
 
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(
@@ -53,7 +54,7 @@ class VisionEngine:
         results = self.detector.predict(
             source=frame,
             conf=self.confidence,
-            imgsz=640,
+            imgsz=self.image_size,
             verbose=False,
             device="cpu",
         )
